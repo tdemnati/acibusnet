@@ -1,4 +1,4 @@
-package ai.spring.jdbc;
+package amind.environment;
 
 import java.io.PrintStream;
 import java.sql.ResultSet;
