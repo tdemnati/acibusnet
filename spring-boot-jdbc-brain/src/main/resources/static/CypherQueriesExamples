@@ -1,0 +1,32 @@
+-----------------
+Matching Example:
+-----------------
+MATCH (n:Person) WHERE n.name =~ "Toma" RETURN n.name as title
+
+---------------------------------
+Node Creation with Links Example:
+---------------------------------
+CREATE (_1:Person {name:'Tarik'})
+CREATE (_2:Person {name:'Teresa'})
+CREATE (_3:Person {name:'Leire'})
+CREATE (_4:Person {name:'TereMari'})
+CREATE (_5:Person {name:'Lhoussaine'})
+CREATE (_6:Person {name:'Halima'})
+CREATE (_7:Person {name:'Fouzia'})
+CREATE (_8:Person {name:'Laila'})
+CREATE (_9:Person {name:'Mohamed'})
+CREATE (_10:Person {name:'Sandrine'})
+
+CREATE
+  (_1)-[:LINK {roles:['Husband']}]->(_2),
+  (_2)-[:LINK {roles:['Wife']}]->(_1),
+  (_2)-[:LINK {roles:['Mother']}]->(_3),
+  (_3)-[:LINK {roles:['Grand-daughter']}]->(_4),
+  (_1)-[:LINK {roles:['Son']}]->(_5),  
+  (_5)-[:LINK {roles:['Husband']}]->(_6),
+  (_6)-[:LINK {roles:['Mother']}]->(_7),
+  (_7)-[:LINK {roles:['Sister']}]->(_8),
+  (_8)-[:LINK {roles:['Sister']}]->(_9),
+  (_9)-[:LINK {roles:['Wife']}]->(_10)
+  
+  

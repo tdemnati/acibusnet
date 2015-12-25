@@ -34,7 +34,7 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
 
     public static final RowMapper<Person> PERSON_ROW_MAPPER = new RowMapper<Person>() {
         public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Person(rs.getString("title"));
+            return new Person(rs.getString("answer"));
         }
     };
 
@@ -43,16 +43,16 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
     JdbcTemplate template;
 
 //    String GET_MOVIE_QUERY =
-//            "MATCH (movie:Movie {title:{1}})" +
+//            "MATCH (movie:Movie {answer:{1}})" +
 //            " OPTIONAL MATCH (movie)<-[r]-(person:Person)\n" +
-//            " RETURN movie.title as title, collect({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles}) as cast LIMIT 1";
+//            " RETURN movie.answer as answer, collect({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles}) as cast LIMIT 1";
 
     //Definition of the class MOVIE
     public static class Person {
-        public String title;
+        public String answer;
 
-        public Person(String title) {
-            this.title = title;
+        public Person(String answer) {
+            this.answer = answer;
         }
     }
     
@@ -88,14 +88,14 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
         	Map<String, Object> row = result.next();
   	
             //Create target i for Node2
-            Map<String, Object> node2 = map("title", row.get("node2"),"label","nodeStyle");
+            Map<String, Object> node2 = map("answer", row.get("node2"),"label","nodeStyle");
             System.out.print(" | NODE2:" + !nodes.contains(node2));
             if(!nodes.contains(node2))
             nodes.add(node2);
             int target = nodes.indexOf(node2);
             
             //Create source i for Node1
-            Map<String, Object> node1 = map("title", row.get("node1"),"label","nodeStyle");
+            Map<String, Object> node1 = map("answer", row.get("node1"),"label","nodeStyle");
             System.out.print(" | NODE1:" + !nodes.contains(node1));
             if(!nodes.contains(node1))
             nodes.add(node1);

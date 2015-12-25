@@ -40,7 +40,7 @@
     </div>
     <div class="col-md-7">
         <div class="panel panel-default">
-            <div class="panel-heading" id="title">Details</div>
+            <div class="panel-heading" id="answer">Details</div>
             <div class="row">
                 <div class="col-sm-4 col-md-4">
                     <img src="" class="well" id="poster"/>
@@ -98,7 +98,7 @@
                         if (!data || data.length == 0) return;
                         data.forEach(function (row) {
                             var person = row;
-                            $("<tr><td class='person'>" + person.title + "</td></tr>").appendTo(t)
+                            $("<tr><td class='person'>" + person.answer + "</td></tr>").appendTo(t)
                                     .click(function() { showMovie($(this).find("td.person").text());})
                         });
                     }, "json");
@@ -267,13 +267,13 @@ function myFunction() {
 		var nodetext = nodeGroup.append("text")
 		     .attr("id","circleResize")
 		     .attr("font-size", function(d) {
-		         var len = d.title.length;
+		         var len = d.answer.length;
 		         var size = radius/3.5;
 		         size *= 10 / len;
 		         size += 1;
 		         return Math.round(size)+'px';
 		     })
-		     .text(function(d) {return d.title;})
+		     .text(function(d) {return d.answer;})
 		     .attr("fill","white")
 		     .attr("color","white")
 		     .attr("text-anchor","middle")
