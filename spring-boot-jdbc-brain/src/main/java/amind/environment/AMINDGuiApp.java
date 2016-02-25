@@ -32,9 +32,15 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
 
     public static final String NEO4J_URL = System.getProperty("NEO4J_URL","jdbc:neo4j://localhost:7474");
 
-    public static final RowMapper<Person> PERSON_ROW_MAPPER = new RowMapper<Person>() {
-        public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Person(rs.getString("answer"));
+    public static final RowMapper<Input> INPUT_ROW_MAPPER = new RowMapper<Input>() {
+        public Input mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Input(rs.getString("input"));
+        }
+    };
+    
+    public static final RowMapper<Output> OUTPUT_ROW_MAPPER = new RowMapper<Output>() {
+        public Output mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Output(rs.getString("output"));
         }
     };
 
@@ -42,26 +48,36 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
     @Autowired
     JdbcTemplate template;
 
-//    String GET_MOVIE_QUERY =
-//            "MATCH (movie:Movie {answer:{1}})" +
-//            " OPTIONAL MATCH (movie)<-[r]-(person:Person)\n" +
-//            " RETURN movie.answer as answer, collect({name:person.name, job:head(split(lower(type(r)),'_')), role:r.roles}) as cast LIMIT 1";
+    //Definition of the class Input
+    public static class Input {
+        public String input;
 
-    //Definition of the class MOVIE
-    public static class Person {
-        public String answer;
-
-        public Person(String answer) {
-            this.answer = answer;
+        public Input(String input) {
+            this.input = input;
         }
     }
     
+    public static class Output {
+        public String output;
+
+        public Output(String output) {
+            this.output = output;
+        }
+    }
+    
+    
     @RequestMapping("/search")
-    public List<Person> search(@RequestParam("q") String query) {
+    public List<Input> search(@RequestParam("q") String query) {
         if (query==null || query.trim().isEmpty()) return Collections.emptyList();
         String queryParam = "(?i).*" + "AMIND" + ".*";
         System.out.print("FIRE/n");
-        return template.query(query, PERSON_ROW_MAPPER, queryParam);
+        return template.query("RETURN " + "'" + query + "'"+ " as input", INPUT_ROW_MAPPER, queryParam);
+    }
+    
+    @RequestMapping("/output")
+    public List<Output> output() {
+        System.out.print("FIRE2/n");
+        return template.query("RETURN " + "'OUTPUT'"+ " as output", OUTPUT_ROW_MAPPER, "");
     }
 
     public static final String GRAPH_QUERY = "MATCH (m)<-[r]-(a) "+
@@ -88,14 +104,14 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
         	Map<String, Object> row = result.next();
   	
             //Create target i for Node2
-            Map<String, Object> node2 = map("answer", row.get("node2"),"label","nodeStyle");
+            Map<String, Object> node2 = map("input", row.get("node2"),"label","nodeStyle");
             System.out.print(" | NODE2:" + !nodes.contains(node2));
             if(!nodes.contains(node2))
             nodes.add(node2);
             int target = nodes.indexOf(node2);
             
             //Create source i for Node1
-            Map<String, Object> node1 = map("answer", row.get("node1"),"label","nodeStyle");
+            Map<String, Object> node1 = map("input", row.get("node1"),"label","nodeStyle");
             System.out.print(" | NODE1:" + !nodes.contains(node1));
             if(!nodes.contains(node1))
             nodes.add(node1);

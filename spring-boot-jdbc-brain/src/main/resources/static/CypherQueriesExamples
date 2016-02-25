@@ -1,7 +1,7 @@
 -----------------
 Matching Example:
 -----------------
-MATCH (n:Person) WHERE n.name =~ "Toma" RETURN n.name as title
+MATCH (n:Person) WHERE n.name =~ "Toma" RETURN n.name as answer
 
 ---------------------------------
 Node Creation with Links Example:
