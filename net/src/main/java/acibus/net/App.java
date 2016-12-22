@@ -19,15 +19,17 @@ public class App
 {
     public static void main( String[] args )
     {
+    	//Start the graphDB
     	Driver driver = GraphDatabase.driver( "bolt://localhost", AuthTokens.basic( "neo4j", "tietie666" ) );
 
     	for (int i=1; i<2; i++) {
-
+    		//Initialize the number of states to receive.
     		State mystate = new State(i);
     		
         	//DB session transaction
     		String bookmark;
-
+    		
+    		//Create a node from statement
     		try ( Session session = driver.session( AccessMode.WRITE ) )
     		{
     		    try ( Transaction tx = session.beginTransaction())
@@ -42,6 +44,8 @@ public class App
     		        bookmark = session.lastBookmark();
     		    }
     		}
+    		
+    		//Read the corresponding statement from DB and output it
     		try ( Session session = driver.session( AccessMode.READ ) )
     		{
     		    StatementResult result;
@@ -73,7 +77,7 @@ public class App
     	
 
 
-
+    	//Close the graphDB
     	driver.close();
     	
     }
