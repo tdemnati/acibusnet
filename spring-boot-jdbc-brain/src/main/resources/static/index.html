@@ -70,6 +70,8 @@
                             </div>
                             <button id="sendbutton" class="btn btn-default" type="submit">Send</button>
                         </form>
+                            <button id="clearbutton" class="btn btn-default" type="submit">Clear</button>
+                            <button id="samplebutton" class="btn btn-default" type="submit">Sample</button>
                     </li>
                 </ul>
             </div>
@@ -122,12 +124,14 @@
         $("#search").submit(search);
         search();
         
-        document.getElementById("sendbutton").addEventListener("click", myFunction);
+        document.getElementById("sendbutton").addEventListener("click", displayGraph);
+        document.getElementById("clearbutton").addEventListener("click", displayGraph);
+        document.getElementById("samplebutton").addEventListener("click", displayGraph);
     })
 </script>
 
 <script type="text/javascript">
-function myFunction() {
+function displayGraph() {
     //Define margins
     var margin = {top: -5, right: -5, bottom: -5, left: -5};
     var width = 1088 - margin.left - margin.right,

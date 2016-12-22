@@ -3858,7 +3858,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-form {
-    width: 800px;
+    width: 900px;
     border: 0;
     margin-left: 0;
     margin-right: 0;

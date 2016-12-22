@@ -31,7 +31,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class AMINDGuiApp extends WebMvcConfigurerAdapter{
 
     public static final String NEO4J_URL = System.getProperty("NEO4J_URL","jdbc:neo4j://localhost:7474");
-
+    public static String OUTPUT = new String();
+    		
     public static final RowMapper<Input> INPUT_ROW_MAPPER = new RowMapper<Input>() {
         public Input mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Input(rs.getString("input"));
@@ -48,7 +49,7 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
     @Autowired
     JdbcTemplate template;
 
-    //Definition of the class Input
+    //Definition of the class Input and Output
     public static class Input {
         public String input;
 
@@ -69,15 +70,17 @@ public class AMINDGuiApp extends WebMvcConfigurerAdapter{
     @RequestMapping("/search")
     public List<Input> search(@RequestParam("q") String query) {
         if (query==null || query.trim().isEmpty()) return Collections.emptyList();
+        OUTPUT=query;
         String queryParam = "(?i).*" + "AMIND" + ".*";
-        System.out.print("FIRE/n");
+        System.out.print("FIRE INPUT/n");
         return template.query("RETURN " + "'" + query + "'"+ " as input", INPUT_ROW_MAPPER, queryParam);
     }
     
+    
     @RequestMapping("/output")
     public List<Output> output() {
-        System.out.print("FIRE2/n");
-        return template.query("RETURN " + "'OUTPUT'"+ " as output", OUTPUT_ROW_MAPPER, "");
+        System.out.print("FIRE OUTPUT/n");
+        return template.query("RETURN '" + OUTPUT+ "' as output", OUTPUT_ROW_MAPPER, "");
     }
 
     public static final String GRAPH_QUERY = "MATCH (m)<-[r]-(a) "+
