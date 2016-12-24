@@ -1,4 +1,4 @@
-package environment;
+package knowledge;
 
 import org.junit.After;
 import org.junit.Before;
