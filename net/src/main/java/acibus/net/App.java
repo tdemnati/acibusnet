@@ -9,7 +9,8 @@ import org.neo4j.driver.v1.Session;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.Transaction;
 import org.neo4j.driver.v1.Values;
-import environment.State;
+
+import acibus.environment.State;
 
 /**
  * Hello world!
