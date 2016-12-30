@@ -20,10 +20,7 @@ public class shouldforwardmultiply {
 	@Test
 	public void shouldforwardmultiplyTest() {
 		System.out.println("\n --- RUNNING forward multiply 1 --- ");
-	    //
-		assertTrue("Error, multiplication result is wrong", mySingleGateNet.forwardMultiplygate() == -6);
-	    
-		/*assertEquals("String","String");*/
+		assertTrue("Error, multiplication result is wrong", mySingleGateNet.force(0.01) == -5.8706);
 	    
 	}
 
